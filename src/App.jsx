@@ -2,15 +2,21 @@ import React, {useState, useEffect} from "react";
 import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
+import Spinner from "./Spinner";
+
 import { getProducts } from "./services/productService";
 
 export default function App() {
   const [size, setSize] = useState('');
   const [products, setProducts] = useState([]);
   const [hasErrored, setHasErrored] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getProducts('shoes').then(res => setProducts(res)).catch(err => setHasErrored(err))
+    getProducts('shoes')
+      .then(res => setProducts(res))
+      .catch(err => setHasErrored(err))
+      .finally(() => setIsLoading(false));
   }, [])
 
   function renderProduct(p) {
@@ -29,6 +35,8 @@ export default function App() {
   const filterBySize = size ? products.filter(p => p.skus.find(s => s.size === parseInt(size))) : products;
 
   if(hasErrored) throw hasErrored;
+
+  if(isLoading) return <Spinner />;
 
   return (
     <>
