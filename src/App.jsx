@@ -13,10 +13,18 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    getProducts('shoes')
-      .then(res => setProducts(res))
-      .catch(err => setHasErrored(err))
-      .finally(() => setIsLoading(false));
+    async function init() {
+      try {
+        const data = await getProducts('shoes');
+        setProducts(data);
+      } catch (error) {
+        setHasErrored(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    init();
   }, [])
 
   function renderProduct(p) {
