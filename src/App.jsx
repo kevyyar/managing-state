@@ -3,6 +3,10 @@ import "./App.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import Products from "./Products";
+import Detail from "./Detail";
+import Cart from "./Cart";
+
+import {Routes, Route} from "react-router-dom";
 
 export default function App() {
   return (
@@ -10,7 +14,11 @@ export default function App() {
       <div className="content">
         <Header />
         <main>
-          <Products />
+          <Routes>
+            <Route path="/:category" element={<Products />} />
+            <Route path="/detail" element={<Detail />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
         </main>
       </div>
       <Footer />
