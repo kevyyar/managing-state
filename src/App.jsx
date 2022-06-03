@@ -6,7 +6,7 @@ import Products from "./Products";
 import Detail from "./Detail";
 import Cart from "./Cart";
 
-import {Routes, Route} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
@@ -15,8 +15,9 @@ export default function App() {
         <Header />
         <main>
           <Routes>
+            <Route path="/" element={<h1>Welcome to Carved Rock Fitness</h1>} />
             <Route path="/:category" element={<Products />} />
-            <Route path="/detail" element={<Detail />} />
+            <Route path="/:category/:id" element={<Detail />} />
             <Route path="/cart" element={<Cart />} />
           </Routes>
         </main>
