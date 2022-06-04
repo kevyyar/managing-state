@@ -1,11 +1,15 @@
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "./services/useFetch";
 import Spinner from "./Spinner";
 import PageNotFound from "./PageNotFound";
 
 export default function Detail() {
+  const [size, setSize] = useState("");
+
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const {
     data: product,
     isLoading,
@@ -25,6 +29,19 @@ export default function Detail() {
       <h1>{product.name}</h1>
       <p>{product.description}</p>
       <p id="price">${product.price}</p>
+      <select
+        id="size"
+        value={size}
+        onChange={(e) => setSize(e.target.value)}
+      >
+        <option value="">What size?</option>
+        {product.skus.map(s => (
+          <option key={s.sku} value={s.size}>{s.size}</option>
+        ))}
+      </select>
+      <p>
+        <button className="btn btn-primary" disabled={!size} onClick={() => navigate('/cart')}>Add to cart</button>
+      </p>
       <img src={`/images/${product.image}`} alt={product.category} />
     </div>
   );
